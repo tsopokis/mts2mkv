@@ -1,0 +1,42 @@
+#!/bin/bash
+# This script is created by Yannis Tsopokis and is under the AGPL v3
+# mts2mkv MTS_FILE [ [--rename] DESTINATION_FOLDER ]
+if [ $# -eq 0 ] ; then
+	echo "Usage!"
+	exit -1
+fi
+input=$(echo $1  | sed 's/^.\///')
+dest="./"
+rename=0
+if [ $# -ge 2 ] ; then
+	if [ "$2" = "--rename" ] ; then
+		rename=1
+	else
+		dest=${2}/
+	fi
+fi
+if [ $# -eq 3 ] ; then
+	if [ "$3" = "--rename" ] ; then
+		rename=1
+	else
+		dest=${3}/
+	fi
+fi
+mkdir -p $dest
+#tmp_suffix=$(mktemp -p ./ -u | sed 's/^.\///')
+#new_name=$input-$tmp_suffix
+#py_script=${dest}$new_name.py
+#tmp_video=${dest}$new_name.mts
+
+if [ $rename -eq 0 ] ; then
+	basename=$(basename $input .MTS)
+	basename=$(basename $basename .mts)
+	output=${dest}${basename}.mkv
+else
+	file=$(ls -l --time-style=+%F_%A_%H.%M.%S "$input" | awk '{print $6".mkv"}')
+	oldinput=$input
+	input=$(ls -l --time-style=+%F_%A_%H.%M.%S "$input" | awk '{print $6".mts"}')
+	output=${dest}${file}
+	mv "$oldinput" "$input"
+fi
+mkvmerge -o ${output} ${input}
