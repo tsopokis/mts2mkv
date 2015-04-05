@@ -1,0 +1,11 @@
+#!/bin/bash
+# This script is created by Yannis Tsopokis and is under the AGPL v3 license
+#touch applynewnames.sh
+echo '#!/bin/bash' > applynewnames.sh
+chmod +x applynewnames.sh
+for i in $(find ./ -maxdepth 1 -iname "*.mkv" -type f) ; do
+  file=$(ls -l --time-style=long-iso "$i" | awk '{print $8" "$6"_"$7"-.mkv"}')
+  echo mv $file >> applynewnames.sh  
+done
+sed -i "s/:/./g" applynewnames.sh
+#rename "s/:/./g" *
