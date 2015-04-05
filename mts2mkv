@@ -1,5 +1,5 @@
 #!/bin/bash
-# This script is created by Yannis Tsopokis and is under the AGPL v3
+# This script is created by Yannis Tsopokis and is under the AGPL v3 license
 # mts2mkv MTS_FILE [ [--rename] DESTINATION_FOLDER ]
 if [ $# -eq 0 ] ; then
 	echo "Usage!"
