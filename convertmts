@@ -1,0 +1,4 @@
+#!/bin/bash
+# This script is created by Yannis Tsopokis and is under the AGPL v3
+#find ./ -maxdepth 1 -iname "*.mts" -type f -exec mts2mkv '{}' mkv/ \;
+find ./ -maxdepth 1 -iname "*.mts" -type f -exec mts2mkv '{}' --rename mkv/ \;
